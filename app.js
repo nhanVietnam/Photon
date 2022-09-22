@@ -5,6 +5,8 @@ const form = document.querySelector(".search-form");
 const more = document.querySelector(".more");
 const zoomImage = document.querySelector(".zoom-image");
 const closeZoom = document.querySelector(".close-zoom");
+const prevImageBtn = document.querySelector(".prevImageBtn");
+const nextImageBtn = document.querySelector(".nextImageBtn");
 let imageShow;
 let images;
 let searchValue;
@@ -15,6 +17,7 @@ let currentSearch;
 searchInput.addEventListener("input", updateInput);
 more.addEventListener("click", loadMore);
 closeZoom.addEventListener("click", closeShow);
+prevImageBtn.addEventListener("click", prevImage);
 // zoomImage.addEventListener("click", closeShow);
 
 form.addEventListener("submit", (e) => {
@@ -74,11 +77,11 @@ async function generatePicture(data) {
                 zoomImage.style.display = "flex";
                 zoomImage.style.alignItem = "center";
                 zoomImage.style.justifyContent = "center";
-                // let path = e.target.getAttribute("src");
+                let path = e.target.getAttribute("src");
                 zoomImage.classList.add("active");
                 gallery.classList.add("blur");
                 imgShow = document.createElement("img");
-                imgShow.setAttribute("src", images[index].src);
+                imgShow.setAttribute("src", path);
                 // imgShow.style.width = "500px";
                 imgShow.style.display = "block";
                 imgShow.style.marginInline = "auto";
@@ -87,28 +90,18 @@ async function generatePicture(data) {
         });
     } catch (error) {
         gallery.parentElement.innerHTML = `
-            <h2 style="text-align: center">Số lượt truy cập đã hết.</br> Vui lòng quay lại sau 1 tiếng... </h2>
+            <h2 style="text-align: center">
+                Số lượt truy cập đã hết.</br> Vui lòng quay lại sau 1 tiếng... 
+            </h2>
         `;
         more.style.display = "none";
     }
 }
 
-// function zoomImage(path){
-//     const popup = document.createElement('div');
-//     popup.classList.add('.ga')
-// }
-// function changeImage(src) {
-//     document.body.classList.add("lock-scroll");
-//     zoomImage.style.display = "block";
-//     let path = e.target.getAttribute("src");
-//     zoomImage.classList.add("active");
-//     const imgShow = document.createElement("img");
-//     imgShow.setAttribute("src", src);
-//     imgShow.style.width = "500px";
-//     imgShow.style.display = "block";
-//     imgShow.style.marginInline = "auto";
-//     zoomImage.appendChild(imgShow);
-// }
+function prevImage(e){
+    let img = e.target.parentElement.querySelector('img');
+    console.log(img);
+};
 
 function loading() {
     gallery.parentElement.innerHTML = `
