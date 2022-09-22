@@ -1,0 +1,187 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    min-height: 30vh;
+    justify-content: center;
+    align-items: center;
+}
+
+header h2 {
+    padding: 2rem;
+}
+
+#logo {
+    padding: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.search-form {
+    padding: 2rem;
+    display: flex;
+}
+
+.search-form input {
+    font-size: 2rem;
+    padding: 0.5rem;
+    width: 100%;
+    bottom: none;
+    border: 2px solid rgb(74, 68, 131);
+}
+
+.search-form button {
+    border: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+    background-color: rgb(74, 68, 131);
+    color: white;
+    cursor: pointer;
+}
+
+.gallery-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: gray;
+}
+
+.gallery-info a {
+    color: gray;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    padding: 2rem 0;
+    width: 80%;
+    margin: auto;
+    row-gap: 5rem;
+    column-gap: 3rem;
+}
+
+.gallery-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.nav-button {
+    margin-top: 48px;
+    margin-bottom: 48px;
+}
+
+.more {
+    display: block;
+    padding: 1rem 3rem;
+    background-color: rgb(74, 68, 131);
+    color: white;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.zoom-image {
+    position: fixed;
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+}
+
+.close-zoom {
+    position: absolute;
+    right: 80px;
+    top: 50px;
+    width: 50px;
+    height: 50px;
+    /* background-color: yellow; */
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.close-zoom::before {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 4px;
+    background-color: #333;
+    border-radius: 100px;
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.close-zoom::after {
+    content: "";
+    position: absolute;
+    width: 35px;
+    height: 4px;
+    background-color: #333;
+    border-radius: 100px;
+    transform: rotate(135deg);
+    pointer-events: none;
+}
+
+body.lock-scroll {
+    overflow: hidden;
+}
+
+.blur {
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+}
+
+.lds-ring {
+    display: flex;
+    margin: 0 auto;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border: 8px solid #333;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: #333 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
