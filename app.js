@@ -17,8 +17,35 @@ let currentSearch;
 searchInput.addEventListener("input", updateInput);
 more.addEventListener("click", loadMore);
 closeZoom.addEventListener("click", closeShow);
-prevImageBtn.addEventListener("click", prevImage);
+// prevImageBtn.addEventListener("click", prevImage);
 // zoomImage.addEventListener("click", closeShow);
+
+let index = 0;
+document.body.addEventListener("click", (e) => {
+    let imgSrc;
+    hideImageBtn(index);
+    let imagesList = gallery.querySelectorAll(".gallery-image");
+    if (e.target.matches(".nextImageBtn")) {
+        imgSrc = zoomImage.querySelector("img").getAttribute("src");
+        // console.log(imgSrc);
+        console.log(imagesList);
+        index = [...imagesList].findIndex((image) => image.src === imgSrc);
+        index++;
+        let newImage = [...imagesList][index].getAttribute("src");
+        imgShow.setAttribute("src", newImage);
+        hideImageBtn(index);
+    }
+
+    if (e.target.matches(".prevImageBtn")) {
+        imgSrc = zoomImage.querySelector("img").getAttribute("src");
+        console.log(imagesList);
+        index = [...imagesList].findIndex((image) => image.src === imgSrc);
+        index--;
+        let newImage = [...imagesList][index].getAttribute("src");
+        imgShow.setAttribute("src", newImage);
+        hideImageBtn(index);
+    }
+});
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -70,9 +97,10 @@ async function generatePicture(data) {
             gallery.appendChild(galleryImg);
         });
         images = document.querySelectorAll(".gallery-image");
-        images.forEach((image, index) => {
+        images.forEach((image, ind) => {
             image.addEventListener("click", (e) => {
                 // console.log(e.target.getAttribute('src'));
+                index = ind;
                 document.body.classList.add("lock-scroll");
                 zoomImage.style.display = "flex";
                 zoomImage.style.alignItem = "center";
@@ -82,7 +110,6 @@ async function generatePicture(data) {
                 gallery.classList.add("blur");
                 imgShow = document.createElement("img");
                 imgShow.setAttribute("src", path);
-                // imgShow.style.width = "500px";
                 imgShow.style.display = "block";
                 imgShow.style.marginInline = "auto";
                 zoomImage.appendChild(imgShow);
@@ -98,10 +125,13 @@ async function generatePicture(data) {
     }
 }
 
-function prevImage(e){
-    let img = e.target.parentElement.querySelector('img');
-    console.log(img);
-};
+console.log(index);
+function hideImageBtn(index) {
+    let imagesList = gallery.querySelectorAll(".gallery-image");
+    prevImageBtn.style.display = index === 0 ? "none" : "block";
+    nextImageBtn.style.display =
+        index === imagesList.length - 1 ? "none" : "block";
+}
 
 function loading() {
     gallery.parentElement.innerHTML = `
@@ -138,7 +168,6 @@ function closeShow() {
         zoomImage.classList.remove("active");
         gallery.classList.remove("blur");
         document.body.classList.remove("lock-scroll");
-        console.log("Deleted");
     }
 }
 
@@ -149,9 +178,10 @@ async function loadMore() {
     } else {
         fetchLink = `https://api.pexels.com/v1/curated?per_page=15&page=${page}`;
     }
-
     const data = await fetchAPI(fetchLink);
     generatePicture(data);
+    index = gallery.querySelectorAll('gallery-image').length;
+    console.log(index);;
 }
 
 curatedPhotos();
