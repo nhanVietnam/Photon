@@ -33,7 +33,7 @@ document.body.addEventListener("click", (e) => {
         index++;
         let newImage = [...imagesList][index].getAttribute("src");
         imgShow.setAttribute("src", newImage);
-        hideImageBtn(index);
+        hideImageBtn(imagesList, index);
     }
 
     if (e.target.matches(".prevImageBtn")) {
@@ -43,7 +43,7 @@ document.body.addEventListener("click", (e) => {
         index--;
         let newImage = [...imagesList][index].getAttribute("src");
         imgShow.setAttribute("src", newImage);
-        hideImageBtn(index);
+        hideImageBtn(imagesList, index);
     }
 });
 
@@ -93,7 +93,7 @@ async function generatePicture(data) {
                 <a href="${photo.src.original}" download>Download
                 </a>
                 </div>
-                <img src="${photo.src.large}" class="gallery-image"></img>`;
+                <img src="${photo.src.large}" loading="lazy" class="gallery-image"></img>`;
             gallery.appendChild(galleryImg);
         });
         images = document.querySelectorAll(".gallery-image");
@@ -126,8 +126,7 @@ async function generatePicture(data) {
 }
 
 console.log(index);
-function hideImageBtn(index) {
-    let imagesList = gallery.querySelectorAll(".gallery-image");
+function hideImageBtn(imagesList, index) {
     prevImageBtn.style.display = index === 0 ? "none" : "block";
     nextImageBtn.style.display =
         index === imagesList.length - 1 ? "none" : "block";
@@ -180,8 +179,8 @@ async function loadMore() {
     }
     const data = await fetchAPI(fetchLink);
     generatePicture(data);
-    index = gallery.querySelectorAll('gallery-image').length;
-    console.log(index);;
+    index = gallery.querySelectorAll("gallery-image").length;
+    console.log(index);
 }
 
 curatedPhotos();
